@@ -1,63 +1,53 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import {
-  ScrollView,
-  RefreshControl,
-  StatusBar,
-  StyleSheet,
-  Text,
   View,
-  Platform,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  StatusBar,
 } from 'react-native';
 
-export default function bt2() {
-  const [refreshing, setRefreshing] = useState(false);
-  const [barStyle, setBarStyle] = useState<'light-content' | 'dark-content'>('light-content');
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    setBarStyle(prev => prev === 'light-content' ? 'dark-content' : 'light-content');
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1000);
-  };
-
-  const isIOS = Platform.OS === 'ios';
-  const statusBarColor = barStyle === 'light-content' ? '#00BFFF' : '#FF69B4';
-
+const B2 = () => {
   return (
-    <View style={{ flex: 1 }}>
-      {isIOS ? (
-        // Với iOS, sử dụng translucent status bar và tạo thêm một View làm nền màu cho StatusBar.
-        <>
-          <StatusBar barStyle={barStyle} backgroundColor="transparent" translucent={true} />
-          <View style={{ height: 20, backgroundColor: statusBarColor }} />
-        </>
-      ) : (
-        // Trên Android, vẫn dùng thuộc tính backgroundColor trực tiếp.
-        <StatusBar barStyle={barStyle} backgroundColor={statusBarColor} translucent={false} />
-      )}
-      <ScrollView
-        contentContainerStyle={styles.content}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
+    <ImageBackground
+      source={require('../assets/images/banner13.jpg')}
+      style={styles.bgImage}
+      resizeMode="cover"
+    >
+      {/* Đặt StatusBar trong suốt */}
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
+
+      {/* Nội dung chính, căn giữa theo chiều dọc và ngang */}
+      <View style={styles.container}>
         <Text style={styles.text}>
-          Kéo xuống để thay đổi màu StatusBar
+          Đây là ví dụ Bài 2 - Nội dung được căn giữa với justifyContent
         </Text>
-      </ScrollView>
-    </View>
+      </View>
+    </ImageBackground>
   );
-}
+};
+
+export default B2;
 
 const styles = StyleSheet.create({
-  content: {
+  bgImage: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center', 
     alignItems: 'center',
-    padding: 20
   },
   text: {
-    fontSize: 18
+    fontSize: 20,
+    color: '#fff',
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
+    marginHorizontal: 20,
   },
 });

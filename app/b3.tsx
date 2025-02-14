@@ -1,191 +1,137 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  StyleSheet, 
-  KeyboardAvoidingView, 
-  Platform, 
-  ScrollView, 
-  Image 
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  StatusBar,
+  TouchableOpacity,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function bt3() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [secureText, setSecureText] = useState(true);
-
+export default function App() {
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
+      {/* StatusBar trong suốt */}
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
+
+      {/* Bọc toàn bộ nội dung bằng ImageBackground */}
+      <ImageBackground
+        source={require('../assets/images/banner13.jpg')} // hoặc link ảnh online
+        style={styles.bgImage}
+        resizeMode="cover"
+      >
+        {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.welcomeText}>Hi Welcome Back! 👋</Text>
-          <Text style={styles.subText}>Hello again you have been missed!</Text>
-        </View>
-
-        <Image 
-          source={require('../assets/images/banner13.jpg')}
-          style={styles.illustration}
-          resizeMode="contain"
-        />
-
-        <View style={styles.formContainer}>
-          <Text style={styles.label}>Email address</Text>
-          <TextInput 
-            style={styles.input}
-            placeholder="Enter your email address"
-            value={email}
-            onChangeText={setEmail}
+          {/* Icon tim (heart) đặt position absolute để di chuyển tuỳ ý */}
+          <Icon
+            name="heart"
+            size={30}
+            color="red"
+            style={styles.heartIcon}
           />
-
-          <Text style={styles.label}>Password</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput 
-              style={styles.passwordInput}
-              placeholder="Enter your password"
-              secureTextEntry={secureText}
-              value={password}
-              onChangeText={setPassword}
-            />
-            <TouchableOpacity onPress={() => setSecureText(!secureText)}>
-              <Ionicons name={secureText ? "eye-off" : "eye"} size={24} color="#666" />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.dividerContainer}>
-            <View style={styles.divider} />
-            <Text style={styles.dividerText}>Or Login with</Text>
-            <View style={styles.divider} />
-          </View>
-
-          <View style={styles.socialButtons}>
-            <TouchableOpacity style={styles.socialButton}>
-              <Ionicons name="logo-facebook" size={24} color="#1877F2" />
-              <Text style={styles.socialButtonText}>Facebook</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.socialButton}>
-              <Ionicons name="logo-google" size={24} color="#DB4437" />
-              <Text style={styles.socialButtonText}>Google</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Don't have an account? </Text>
-            <TouchableOpacity>
-              <Text style={styles.registerText}>Register</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.headerText}>Khu du lịch ABC</Text>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+
+        {/* Body */}
+        <View style={styles.body}>
+          <Text style={styles.bodyTitle}>Giới thiệu</Text>
+          <Text
+            style={styles.bodyText}
+            numberOfLines={6}        // Giới hạn 6 dòng
+            ellipsizeMode="tail"    // Hiển thị "..." nếu vượt quá
+          >
+            Đây là phần giới thiệu về khu du lịch ABC. Khu du lịch này nằm ở vùng
+            núi cao, có khí hậu mát mẻ quanh năm, cảnh sắc tuyệt đẹp, phù hợp để
+            nghỉ dưỡng và tham quan. Bạn có thể tham gia nhiều hoạt động như leo
+            núi, cắm trại, ngắm bình minh, thưởng thức đặc sản địa phương. Nội dung
+            này nếu quá dài sẽ được cắt bớt và hiển thị dấu "..." theo yêu cầu.
+          </Text>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerPrice}>Giá: 1.500.000đ</Text>
+          <TouchableOpacity style={styles.footerButton}>
+            <Text style={styles.footerButtonText}>Đặt ngay</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    </View>
   );
 }
 
+// Phần style
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    flex: 1,
+  },
+  bgImage: {
+    flex: 1,
+    justifyContent: 'center',
   },
   header: {
-    marginTop: 40,
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  subText: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 5,
-  },
-  illustration: {
-    width: '100%',
-    height: 200,
-    marginVertical: 30,
-  },
-  formContainer: {
-    width: '100%',
-  },
-  label: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-    backgroundColor: '#F8F8F8',
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
-    borderRadius: 8,
-    backgroundColor: '#F8F8F8',
-    marginBottom: 20,
-  },
-  passwordInput: {
-    flex: 1,
-    padding: 12,
-  },
-  dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  divider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#E8E8E8',
-  },
-  dividerText: {
-    marginHorizontal: 10,
-    color: '#666',
-  },
-  socialButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  socialButton: {
-    flexDirection: 'row',
+    flex: 7,
+    position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
-    borderRadius: 8,
-    width: '48%',
   },
-  socialButtonText: {
-    marginLeft: 8,
+  heartIcon: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  headerText: {
+    fontSize: 24,
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
+  },
+  body: {
+    flex: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    marginHorizontal: 20,
+    padding: 15,
+    borderRadius: 8,
+  },
+  bodyTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontFamily: 'Poppins-Regular',
+  },
+  bodyText: {
     fontSize: 16,
-    color: '#333',
+    lineHeight: 24,
+    fontFamily: 'Poppins-Regular',
   },
   footer: {
+    height: 60,
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffffaa',
+    paddingHorizontal: 20,
   },
-  footerText: {
-    color: '#666',
-    fontSize: 16,
+  footerPrice: {
+    fontSize: 18,
+    color: '#333',
+    fontWeight: '600',
+    fontFamily: 'Poppins-Regular',
   },
-  registerText: {
-    color: '#007AFF',
+  footerButton: {
+    backgroundColor: '#f44336',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 5,
+  },
+  footerButtonText: {
+    color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
   },
 });
